@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             author: 'Loki Laufeyson',
             authorTitle: 'Consultor de Ilusões | Especialista em Gestão de Traições',
             avatarClass: 'avatar-loki',
-            content: 'À procura de novas oportunidades em Midgard. Especialista em discursos longos e em apunhalar pessoas pelas costas (literal e metaforicamente). Disponível para início imediato. <br><br><span class="hashtags">#OpenToWork #DeusDaMentira #Networking</span>',
+            content: 'À procura de novas oportunidades em Midgard. Especialista em discursos longos e em apunhalar pessoas pelas costas (literal e metaforicamente). Disponível para início imediato. <br><br><span class="hashtags">#OpenToKill #DeusDaMentira #Networking</span>',
             skulls: 15,
             date: '2024-07-20 10:30',
             timestamp: new Date('2024-07-20T10:30:00').getTime(),
