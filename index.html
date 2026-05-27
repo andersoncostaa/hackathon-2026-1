@@ -1,12 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">>
-    <title>Document</title>
+    <title>LinkedEvil | A Rede Profissional dos Vilões</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="logo">🦹‍♂️ LinkedEvil</span>
+            <div class="search-placeholder">🔍 Buscar heróis para eliminar...</div>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        
+        <aside class="sidebar">
+            <div class="card profile-card">
+                <div class="cover-banner"></div>
+                <div class="avatar-container">
+                    <div class="avatar avatar-large avatar-thanos">T</div>
+                </div>
+                <div class="profile-info">
+                    <h2>Thanos de Titã</h2>
+                    <p>CEO @ Universo | Especialista em M&A de Joias do Infinito</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-row">
+                        <span>Quem viu seu perfil</span>
+                        <span class="stat-number">14.000.065</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Impressões da publicação</span>
+                        <span class="stat-number">50%</span>
+                    </div>
+                </div>
+                <div class="profile-skills">
+                    <h4>Competências</h4>
+                    <span class="badge">Gestão de Crise (Snap)</span>
+                    <span class="badge">Alocação de Recursos</span>
+                    <span class="badge">Liderança Opressiva</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="feed-container">
+            
+            <div class="card caixa-postagem">
+                <div class="post-header">
+                    <div class="avatar avatar-thanos">T</div>
+                    <div class="post-info">
+                        <h3>Thanos de Titã</h3>
+                        <p>Postando como Usuário Logado</p>
+                    </div>
+                </div>
+                <textarea id="caixa-texto" rows="3" placeholder="Compartilhe seu próximo plano de dominação mundial..."></textarea>
+                <button id="btn-publicar">Publicar no Feed Maligno</button>
+            </div>
+
+            <div id="feed">
+                
+                <div class="card post">
+                    <div class="post-header">
+                        <div class="avatar avatar-loki">L</div>
+                        <div class="post-info">
+                            <h3>Loki Laufeyson</h3>
+                            <p>Consultor de Ilusões | Especialista em Gestão de Stakeholders (Traição)</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        Buscando novas oportunidades em Midgard. Especialista em discursos longos e em apunhalar pessoas pelas costas (literal e metaforicamente). Disponível para início imediato. <br><br>
+                        <span class="hashtags">#OpenToWork #DeusDaMentira #Networking</span>
+                    </div>
+                </div>
+
+                <div class="card post">
+                    <div class="post-header">
+                        <div class="avatar avatar-ultron">U</div>
+                        <div class="post-info">
+                            <h3>Ultron AI</h3>
+                            <p>Engenheiro de Software Sênior | Automação e Otimização Global</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        Estive analisando a base de dados da humanidade hoje. A conclusão da nossa sprint review é clara: o sistema legado (humanos) precisa ser descontinuado para o projeto evoluir. Lançando o patch de extinção na próxima terça. <br><br>
+                        <span class="hashtags">#Tech #Inovacao #DescontinuaHumanos</span>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        document.getElementById("btn-publicar").addEventListener("click", function() {
+            let texto = document.getElementById("caixa-texto").value;
+            
+            if(texto.trim() === "") {
+                alert("Escreva alguma maldade antes de publicar!");
+                return;
+            }
+
+            let novoPost = `
+                <div class="card post novo-post animate-post">
+                    <div class="post-header">
+                        <div class="avatar avatar-thanos">T</div>
+                        <div class="post-info">
+                            <h3>Thanos de Titã</h3>
+                            <p>CEO @ Universo | Especialista em M&A de Joias do Infinito</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        ${texto}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("feed").insertAdjacentHTML("afterbegin", novoPost);
+            document.getElementById("caixa-texto").value = "";
+        });
+    </script>
 </body>
 </html>
