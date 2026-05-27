@@ -1,77 +1,302 @@
-/* Estilos gerais */
+/* RESET DE ESTILOS UNIVERSAL */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #1a1a1a; /* Fundo escuro para o tema vilão */
-    color: #e0e0e0; /* Texto claro */
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
+    background-color: #0f0f11; /* Fundo cinza quase preto super moderno */
+    color: #e6e6e6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding-bottom: 40px;
 }
 
-header {
-    background-color: #330000; /* Vermelho escuro, cor de vilão */
-    color: white;
-    padding: 1rem 0;
-    text-align: center;
-    border-bottom: 2px solid #660000;
+/* NAVBAR CORPORATIVA */
+.navbar {
+    background-color: #1d0033; /* Roxo corporativo maligno */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid #6b11b5;
+    padding: 10px 0;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
+.nav-container {
+    max-width: 950px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
-nav ul li {
-    margin: 0 15px;
+.navbar .logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #cb9bf2;
+    letter-spacing: -0.5px;
 }
 
-nav ul li a {
-    color: white;
+.navbar .logo-evil {
+    color: #ff4444; /* Um toque de vermelho para o "Evil" */
+}
+
+.search-placeholder {
+    background-color: #2c1445;
+    color: #9f82bf;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 13px;
+    width: 250px;
+    border: 1px solid #4a1d7a;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-item {
+    color: #cb9bf2;
     text-decoration: none;
-    font-weight: bold;
-    padding: 0.5rem 1rem;
+    font-weight: 600;
+    padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-nav ul li a:hover {
-    background-color: #660000;
+.nav-item:hover {
+    background-color: #4a1d7a;
 }
 
-main {
+
+/* GRIDE / LAYOUT LINKEDIN (Duas Colunas) */
+.main-layout {
+    max-width: 950px;
+    margin: 25px auto;
+    display: flex;
+    gap: 25px;
+    padding: 0 20px;
+}
+
+/* Elementos flexíveis para simular o desktop real */
+.sidebar {
+    flex: 1; /* Coluna menor */
+    min-width: 280px;
+}
+
+.feed-container {
+    flex: 2; /* Coluna maior para as postagens */
+}
+
+/* CARDS PADRÃO (Base de tudo) */
+.card {
+    background-color: #18181c;
+    border: 1px solid #2b2b30;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ESTILIZAÇÃO DA SIDEBAR (PERFIL DO THANOS) */
+.profile-card {
+    position: relative;
+    text-align: center;
+}
+
+.cover-banner {
+    background: linear-gradient(45deg, #4a1d7a, #110022);
+    height: 65px;
+    width: 100%;
+}
+
+.avatar-container {
+    margin-top: -35px;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-large {
+    width: 72px;
+    height: 72px;
+    font-size: 32px !important;
+    border: 4px solid #18181c;
+}
+
+.profile-info {
+    padding: 15px;
+    border-bottom: 1px solid #2b2b30;
+}
+
+.profile-info h2 {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.profile-info p {
+    font-size: 13px;
+    color: #aaaaaa;
+    line-height: 1.4;
+}
+
+.profile-stats {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #2b2b30;
+    background-color: #141417;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #aaaaaa;
+    padding: 4px 0;
+}
+
+.stat-number {
+    color: #cb9bf2;
+    font-weight: bold;
+}
+
+.profile-skills {
+    padding: 15px;
+    text-align: left;
+}
+
+.profile-skills h4 {
+    font-size: 12px;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #251b33;
+    color: #cb9bf2;
+    border: 1px solid #4a1d7a;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 12px;
+    margin: 2px;
+    font-weight: 500;
+}
+
+/* ESTILIZAÇÃO DO FEED & POSTS */
+.caixa-postagem {
     padding: 20px;
-    max-width: 900px;
-    margin: 20px auto;
-    background-color: #2a2a2a; /* Fundo um pouco mais claro para o conteúdo */
+    border: 1px solid #4a1d7a; /* Destaque para a área de ação */
+}
+
+textarea {
+    width: 100%;
+    background-color: #222226;
+    color: #ffffff;
+    border: 1px solid #333338;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    padding: 12px;
+    margin: 15px 0 0 0;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
 }
 
-section {
-    margin-bottom: 30px;
+textarea:focus {
+    outline: none;
+    border-color: #6b11b5;
+}
+
+button {
+    background-color: #6b11b5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 5px;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #821fd1;
+}
+
+/* POSTS INDIVIDUAIS */
+.post {
     padding: 20px;
-    background-color: #3a3a3a;
-    border-radius: 5px;
-    border: 1px solid #444;
 }
 
-h2 {
-    color: #ff4444; /* Vermelho vibrante para títulos */
-    border-bottom: 2px solid #ff4444;
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ffffff;
+    flex-shrink: 0; /* Evita que o avatar encolha */
+}
+
+/* Cores específicas de avatares baseadas nos vilões */
+.avatar-thanos { background-color: #6b11b5; }
+.avatar-loki { background-color: #1b661b; }
+.avatar-ultron { background-color: #991b1b; }
+
+.post-info {
+    flex-grow: 1; /* Permite que o post-info ocupe o espaço restante */
+}
+
+.post-info h3 {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.post-info p {
+    font-size: 12px;
+    color: #88888b;
+}
+
+.post-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #d1d1d6;
+}
+
+.hashtags {
+    color: #cb9bf2;
+    font-weight: 600;
+}
+
+/* Efeito visual quando um post novo entra */
+.novo-post {
+    border-left: 4px solid #cb9bf2;
+}
+
+/* Estilos para os formulários de autenticação (adaptados ao novo tema) */
+#auth-section h2 {
+    color: #cb9bf2;
+    border-bottom: 1px solid #4a1d7a;
     padding-bottom: 10px;
-    margin-top: 0;
+    margin-bottom: 20px;
 }
 
-/* Estilos para os formulários de autenticação */
 .auth-forms {
     display: flex;
     justify-content: space-around;
@@ -81,18 +306,19 @@ h2 {
 }
 
 .form-container {
-    background-color: #444;
+    background-color: #222226;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     flex: 1;
     min-width: 300px;
+    border: 1px solid #333338;
 }
 
 .form-container h3 {
-    color: #ff8888;
+    color: #cb9bf2;
     margin-top: 0;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #4a1d7a;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
@@ -101,6 +327,7 @@ h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    color: #e6e6e6;
 }
 
 .form-container form input[type="text"],
@@ -108,144 +335,76 @@ h2 {
     width: calc(100% - 22px); /* Ajuste para padding e border */
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #666;
+    border: 1px solid #4a1d7a;
     border-radius: 4px;
-    background-color: #555;
-    color: #e0e0e0;
+    background-color: #18181c;
+    color: #e6e6e6;
 }
 
 .form-container form button {
-    background-color: #ff4444;
+    background-color: #6b11b5;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: bold;
     transition: background-color 0.3s ease;
     width: 100%;
 }
 
 .form-container form button:hover {
-    background-color: #cc0000;
+    background-color: #821fd1;
 }
 
-
-/* Estilos para o formulário de nova postagem */
-.new-post {
-    background-color: #444;
-    padding: 15px;
-    border-radius: 5px;
+/* Estilos para a seção de Perfil (Edição) */
+#profile-section h2 {
+    color: #cb9bf2;
+    border-bottom: 1px solid #4a1d7a;
+    padding-bottom: 10px;
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
 }
 
-.new-post textarea {
-    width: calc(100% - 22px); /* Ajuste para padding e border */
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #666;
-    border-radius: 4px;
-    background-color: #555;
-    color: #e0e0e0;
-    resize: vertical;
-    min-height: 80px;
-}
-
-.new-post button {
-    background-color: #ff4444;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    align-self: flex-end;
-    transition: background-color 0.3s ease;
-}
-
-.new-post button:hover {
-    background-color: #cc0000;
-}
-
-/* Estilos para as postagens individuais */
-.post-card {
-    background-color: #444;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #555;
-}
-
-.post-card .author {
-    font-weight: bold;
-    color: #ff8888;
-    margin-bottom: 5px;
-}
-
-.post-card .content {
-    margin-bottom: 10px;
-}
-
-.post-card .actions {
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #bbb;
-}
-
-.post-card .actions .skull-icon {
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 1.2rem;
-    color: #e0e0e0; /* Cor da caveira */
-}
-
-.post-card .actions .skull-icon:hover {
-    color: #ff4444; /* Cor da caveira ao passar o mouse */
-}
-
-/* Estilos para a seção de Perfil */
-.profile-card {
-    background-color: #444;
+.profile-card-edit {
+    background-color: #18181c;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid #2b2b30;
 }
 
-.profile-header {
+.profile-card-edit .profile-header {
     text-align: center;
     margin-bottom: 20px;
 }
 
-#profile-pic {
+.profile-card-edit #profile-pic {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #ff4444;
+    border: 3px solid #6b11b5;
     margin-bottom: 10px;
 }
 
-#profile-villain-name {
-    color: #ff8888;
+.profile-card-edit #profile-villain-name-edit {
+    color: #cb9bf2;
     font-size: 2rem;
     margin: 0;
 }
 
-.profile-details {
+.profile-card-edit .profile-details {
     width: 100%;
     max-width: 500px;
 }
 
-.profile-details h4 {
-    color: #ff4444;
-    border-bottom: 1px solid #666;
+.profile-card-edit .profile-details h4 {
+    color: #cb9bf2;
+    border-bottom: 1px solid #4a1d7a;
     padding-bottom: 5px;
     margin-top: 20px;
     margin-bottom: 15px;
@@ -255,6 +414,7 @@ h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    color: #e6e6e6;
 }
 
 #edit-profile-form input[type="text"],
@@ -262,21 +422,21 @@ h2 {
     width: calc(100% - 22px); /* Ajuste para padding e border */
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #666;
+    border: 1px solid #4a1d7a;
     border-radius: 4px;
-    background-color: #555;
-    color: #e0e0e0;
+    background-color: #222226;
+    color: #e6e6e6;
     resize: vertical;
 }
 
 #edit-profile-form button {
-    background-color: #ff4444;
+    background-color: #6b11b5;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: bold;
     transition: background-color 0.3s ease;
     width: 100%;
@@ -284,7 +444,7 @@ h2 {
 }
 
 #edit-profile-form button:hover {
-    background-color: #cc0000;
+    background-color: #821fd1;
 }
 
 #profile-abilities-list {
@@ -297,60 +457,59 @@ h2 {
 }
 
 #profile-abilities-list li {
-    background-color: #660000;
-    color: white;
+    background-color: #251b33;
+    color: #cb9bf2;
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 0.9rem;
+    border: 1px solid #4a1d7a;
 }
 
 /* Estilos para a seção de Vagas */
+#jobs-section h2 {
+    color: #cb9bf2;
+    border-bottom: 1px solid #4a1d7a;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
 .job-card {
-    background-color: #444;
+    background-color: #222226;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 15px;
-    border: 1px solid #555;
+    border: 1px solid #333338;
 }
 
 .job-card h3 {
-    color: #ff8888;
+    color: #cb9bf2;
     margin-top: 0;
     margin-bottom: 10px;
 }
 
 .job-card p {
     margin-bottom: 10px;
+    color: #d1d1d6;
 }
 
 .job-card .requirements ul {
     list-style: disc;
     margin-left: 20px;
     padding-left: 0;
+    color: #d1d1d6;
 }
 
 .job-card .apply-button {
-    background-color: #ff4444;
+    background-color: #6b11b5;
     color: white;
     border: none;
     padding: 8px 15px;
-    border-radius: 4px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
 }
 
 .job-card .apply-button:hover {
-    background-color: #cc0000;
-}
-
-
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 30px;
-    background-color: #330000;
-    color: #aaa;
-    border-top: 2px solid #660000;
-    font-size: 0.9rem;
+    background-color: #821fd1;
 }

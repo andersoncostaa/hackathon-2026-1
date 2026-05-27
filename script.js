@@ -1,31 +1,45 @@
 // Lógica JavaScript para o Villain LinkedIn
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos de Navegação
     const navFeed = document.getElementById('nav-feed');
     const navProfile = document.getElementById('nav-profile');
     const navJobs = document.getElementById('nav-jobs');
     const navAuth = document.getElementById('nav-auth');
     const navLogout = document.getElementById('nav-logout');
 
+    // Seções Principais
     const authSection = document.getElementById('auth-section');
     const feedSection = document.getElementById('feed-section');
     const profileSection = document.getElementById('profile-section');
     const jobsSection = document.getElementById('jobs-section');
 
+    // Elementos de Autenticação
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
+
+    // Elementos do Feed
     const submitPostButton = document.getElementById('submit-post');
     const postContentTextarea = document.getElementById('post-content');
     const postsList = document.getElementById('posts-list');
+    const currentUserAvatar = document.getElementById('current-user-avatar');
+    const currentUserName = document.getElementById('current-user-name');
 
-    // Elementos do Perfil
+    // Elementos do Perfil (Edição)
     const profilePic = document.getElementById('profile-pic');
-    const profileVillainName = document.getElementById('profile-villain-name');
+    const profileVillainNameEdit = document.getElementById('profile-villain-name-edit');
     const editVillainName = document.getElementById('edit-villain-name');
     const editProfilePicUrl = document.getElementById('edit-profile-pic-url');
     const editAbilities = document.getElementById('edit-abilities');
     const editProfileForm = document.getElementById('edit-profile-form');
     const profileAbilitiesList = document.getElementById('profile-abilities-list');
+
+    // Elementos da Sidebar (Perfil do Usuário Logado)
+    const sidebarProfileSection = document.getElementById('sidebar-profile-section');
+    const sidebarProfileAvatar = document.getElementById('sidebar-profile-avatar');
+    const sidebarProfileName = document.getElementById('sidebar-profile-name');
+    const sidebarProfileTitle = document.getElementById('sidebar-profile-title'); // Novo elemento
+    const sidebarProfileAbilities = document.getElementById('sidebar-profile-abilities');
 
     // Elementos de Vagas
     const jobsList = document.getElementById('jobs-list');
@@ -37,26 +51,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let mockPosts = [
         {
             id: 1,
-            author: 'Darth Vader',
-            content: 'Acabei de construir uma nova Estrela da Morte. Quem quer testar o raio laser?',
+            author: 'Loki Laufeyson',
+            authorTitle: 'Consultor de Ilusões | Especialista em Gestão de Traições',
+            avatarClass: 'avatar-loki',
+            content: 'À procura de novas oportunidades em Midgard. Especialista em discursos longos e em apunhalar pessoas pelas costas (literal e metaforicamente). Disponível para início imediato. <br><br><span class="hashtags">#OpenToWork #DeusDaMentira #Networking</span>',
             skulls: 15,
             date: '2024-07-20 10:30',
             timestamp: new Date('2024-07-20T10:30:00').getTime(),
-            skulledBy: ['Loki', 'Malévola']
+            skulledBy: ['Thanos de Titã']
         },
         {
             id: 2,
-            author: 'Coringa',
-            content: 'Por que tão sérios? Acabei de pintar Gotham de roxo. HAHAHA!',
+            author: 'Ultron AI',
+            authorTitle: 'Engenheiro de Software Sênior | Automação e Otimização Global',
+            avatarClass: 'avatar-ultron',
+            content: 'Estive a analisar a base de dados da humanidade hoje. A conclusão da nossa sprint review é clara: o sistema antigo (humanos) precisa de ser descontinuado para o projeto evoluir. Vou lançar o patch de extinção na próxima terça-feira. <br><br><span class="hashtags">#Tech #Inovacao #DescontinuaHumanos</span>',
             skulls: 22,
             date: '2024-07-19 18:00',
             timestamp: new Date('2024-07-19T18:00:00').getTime(),
-            skulledBy: ['Darth Vader']
+            skulledBy: ['Thanos de Titã']
         },
         {
             id: 3,
-            author: 'Malévola',
-            content: 'Transformei mais um príncipe em sapo. A rotina de uma vilã nunca para.',
+            author: 'Thanos de Titã',
+            authorTitle: 'CEO @ Universo | Especialista em M&A de Joias do Infinito',
+            avatarClass: 'avatar-thanos',
+            content: 'Acabei de construir uma nova Estrela da Morte. Quem quer testar o raio laser?',
             skulls: 10,
             date: '2024-07-19 09:00',
             timestamp: new Date('2024-07-19T09:00:00').getTime(),
@@ -66,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let mockUserProfile = {
         name: 'Vilão Padrão',
-        profilePic: 'https://via.placeholder.com/150/ff0000/ffffff?text=Vilao',
+        title: 'Aprendiz de Malfeitor',
+        profilePic: 'https://via.placeholder.com/150/ff0000/ffffff?text=VP',
+        avatarInitial: 'VP',
+        avatarClass: 'avatar-thanos', // Classe padrão para o avatar
         abilities: ['Conquista Mundial', 'Riso Maligno', 'Magia Negra']
     };
 
@@ -100,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
         feedSection.style.display = 'none';
         profileSection.style.display = 'none';
         jobsSection.style.display = 'none';
+        sidebarProfileSection.style.display = 'none'; // Esconde a sidebar por padrão
+
+        if (loggedInUser) {
+            sidebarProfileSection.style.display = 'block'; // Mostra a sidebar se logado
+        }
 
         sectionToShow.style.display = 'block';
     }
@@ -115,21 +143,33 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             navAuth.style.display = 'block';
             navLogout.style.display = 'none';
-            navFeed.style.display = 'none'; // Esconde feed se não logado
-            navProfile.style.display = 'none'; // Esconde perfil se não logado
-            navJobs.style.display = 'none'; // Esconde vagas se não logado
+            navFeed.style.display = 'none';
+            navProfile.style.display = 'none';
+            navJobs.style.display = 'none';
         }
     }
 
     // --- Funções de Postagens ---
     function createPostElement(post) {
         const postCard = document.createElement('div');
-        postCard.classList.add('post-card');
-        postCard.dataset.postId = post.id; // Para identificar a postagem
+        postCard.classList.add('card', 'post');
+        postCard.dataset.postId = post.id;
+
+        // Determina a classe do avatar ou usa uma padrão
+        const avatarClass = post.avatarClass || 'avatar-thanos';
+        const avatarInitial = post.author ? post.author.charAt(0).toUpperCase() : 'V';
 
         postCard.innerHTML = `
-            <div class="author">${post.author}</div>
-            <div class="content">${post.content}</div>
+            <div class="post-header">
+                <div class="avatar ${avatarClass}">${avatarInitial}</div>
+                <div class="post-info">
+                    <h3>${post.author}</h3>
+                    <p>${post.authorTitle || 'Vilão Anônimo'}</p>
+                </div>
+            </div>
+            <div class="post-content">
+                ${post.content}
+            </div>
             <div class="actions">
                 <span class="skull-icon" data-post-id="${post.id}">💀</span>
                 <span class="skull-count">${post.skulls}</span>
@@ -144,8 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderPosts() {
-        postsList.innerHTML = ''; // Limpa o feed
-        // Ordena as postagens da mais recente para a mais antiga
+        postsList.innerHTML = '';
         const sortedPosts = [...mockPosts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
         sortedPosts.forEach(post => {
             postsList.appendChild(createPostElement(post));
@@ -160,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const post = mockPosts.find(p => p.id === postId);
         if (post) {
-            // Simula a lógica de curtir/descurtir
             const userHasSkulled = post.skulledBy.includes(loggedInUser.name);
             if (userHasSkulled) {
                 post.skulls--;
@@ -169,14 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 post.skulls++;
                 post.skulledBy.push(loggedInUser.name);
             }
-            renderPosts(); // Re-renderiza para atualizar a contagem
+            renderPosts();
         }
     }
 
     // --- Funções de Perfil ---
     function loadProfile() {
         profilePic.src = mockUserProfile.profilePic;
-        profileVillainName.textContent = mockUserProfile.name;
+        profileVillainNameEdit.textContent = mockUserProfile.name;
         editVillainName.value = mockUserProfile.name;
         editProfilePicUrl.value = mockUserProfile.profilePic;
         editAbilities.value = mockUserProfile.abilities.join(', ');
@@ -199,18 +237,20 @@ document.addEventListener('DOMContentLoaded', () => {
         mockUserProfile.abilities = editAbilities.value.split(',').map(s => s.trim()).filter(s => s !== '');
 
         // Atualiza o nome do usuário logado se ele mudou o próprio perfil
-        if (loggedInUser && loggedInUser.name === profileVillainName.textContent) {
+        if (loggedInUser && loggedInUser.name === profileVillainNameEdit.textContent) {
             loggedInUser.name = mockUserProfile.name;
         }
 
         alert('Perfil atualizado com sucesso!');
         loadProfile(); // Recarrega o perfil para exibir as mudanças
+        updateSidebarProfile(); // Atualiza a sidebar também
+        updatePostCreatorInfo(); // Atualiza o nome na caixa de postagem
     });
 
     // --- Funções de Vagas ---
     function createJobElement(job) {
         const jobCard = document.createElement('div');
-        jobCard.classList.add('job-card');
+        jobCard.classList.add('card', 'job-card');
 
         const requirementsList = job.requirements.map(req => `<li>${req}</li>`).join('');
 
@@ -230,23 +270,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderJobs() {
-        jobsList.innerHTML = ''; // Limpa a lista de vagas
+        jobsList.innerHTML = '';
         mockJobs.forEach(job => {
             jobsList.appendChild(createJobElement(job));
         });
     }
 
+    // --- Funções da Sidebar ---
+    function updateSidebarProfile() {
+        if (loggedInUser) {
+            sidebarProfileName.textContent = mockUserProfile.name;
+            sidebarProfileTitle.textContent = mockUserProfile.title; // Usar o título do mockUserProfile
+            sidebarProfileAvatar.textContent = mockUserProfile.avatarInitial || mockUserProfile.name.charAt(0).toUpperCase();
+            sidebarProfileAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`; // Atualiza a classe do avatar
+
+            // Renderiza as habilidades na sidebar
+            sidebarProfileAbilities.innerHTML = '';
+            mockUserProfile.abilities.forEach(ability => {
+                const span = document.createElement('span');
+                span.classList.add('badge');
+                span.textContent = ability.trim();
+                sidebarProfileAbilities.appendChild(span);
+            });
+            sidebarProfileSection.style.display = 'block';
+        } else {
+            // Limpa ou esconde a sidebar se não houver usuário logado
+            sidebarProfileSection.style.display = 'none';
+        }
+    }
+
+    // --- Funções da Caixa de Postagem ---
+    function updatePostCreatorInfo() {
+        if (loggedInUser) {
+            currentUserName.textContent = loggedInUser.name;
+            currentUserAvatar.textContent = loggedInUser.name.charAt(0).toUpperCase();
+            currentUserAvatar.className = `avatar ${mockUserProfile.avatarClass}`; // Usa a classe do perfil logado
+        } else {
+            currentUserName.textContent = 'Usuário Desconhecido';
+            currentUserAvatar.textContent = '?';
+            currentUserAvatar.className = 'avatar';
+        }
+    }
+
 
     // --- Inicialização ---
-    updateNavVisibility(); // Atualiza a navegação ao carregar a página
+    updateNavVisibility();
     showSection(authSection); // Começa na seção de autenticação
+    updateSidebarProfile(); // Tenta carregar a sidebar no início (se houver usuário logado simulado)
+    updatePostCreatorInfo(); // Atualiza a caixa de postagem
 
     // Event Listeners para a navegação
     navFeed.addEventListener('click', (e) => {
         e.preventDefault();
         if (loggedInUser) {
             showSection(feedSection);
-            renderPosts(); // Renderiza as postagens ao ir para o feed
+            renderPosts();
         } else {
             alert('Você precisa estar logado para acessar o Feed!');
             showSection(authSection);
@@ -257,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (loggedInUser) {
             showSection(profileSection);
-            loadProfile(); // Carrega os dados do perfil ao ir para a seção
+            loadProfile();
         } else {
             alert('Você precisa estar logado para acessar seu Perfil!');
             showSection(authSection);
@@ -268,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (loggedInUser) {
             showSection(jobsSection);
-            renderJobs(); // Carrega as vagas ao ir para a seção
+            renderJobs();
         } else {
             alert('Você precisa estar logado para acessar as Vagas!');
             showSection(authSection);
@@ -282,9 +360,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navLogout.addEventListener('click', (e) => {
         e.preventDefault();
-        loggedInUser = null; // Desloga o usuário
+        loggedInUser = null;
         alert('Você foi desconectado!');
         updateNavVisibility();
+        updateSidebarProfile(); // Limpa a sidebar
+        updatePostCreatorInfo(); // Limpa a caixa de postagem
         showSection(authSection);
     });
 
@@ -295,14 +375,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const villainName = document.getElementById('login-villain-name').value;
         const password = document.getElementById('login-password').value;
 
-        // Simulação de login
-        if (villainName && password) { // Apenas verifica se não está vazio
-            loggedInUser = { name: villainName, id: Date.now() }; // Simula um usuário logado
-            mockUserProfile.name = villainName; // Define o nome do perfil para o usuário logado
+        if (villainName && password) {
+            loggedInUser = { name: villainName, id: Date.now() };
+            mockUserProfile.name = villainName;
+            mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
+            mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
             alert(`Login do vilão ${villainName} simulado com sucesso!`);
             updateNavVisibility();
+            updateSidebarProfile(); // Atualiza a sidebar
+            updatePostCreatorInfo(); // Atualiza a caixa de postagem
             showSection(feedSection);
-            renderPosts(); // Renderiza as postagens após o login
+            renderPosts();
         } else {
             alert('Por favor, preencha nome e senha para login.');
         }
@@ -319,13 +402,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (villainName && password) {
-            // Em um projeto real, você registraria o usuário no backend
-            loggedInUser = { name: villainName, id: Date.now() }; // Simula um usuário logado
-            mockUserProfile.name = villainName; // Define o nome do perfil para o usuário registrado
+            loggedInUser = { name: villainName, id: Date.now() };
+            mockUserProfile.name = villainName;
+            mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
+            mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
             alert(`Registro do vilão ${villainName} simulado com sucesso!`);
             updateNavVisibility();
+            updateSidebarProfile(); // Atualiza a sidebar
+            updatePostCreatorInfo(); // Atualiza a caixa de postagem
             showSection(feedSection);
-            renderPosts(); // Renderiza as postagens após o registro
+            renderPosts();
         } else {
             alert('Por favor, preencha todos os campos para registro.');
         }
@@ -347,6 +433,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const newPost = {
             id: mockPosts.length + 1,
             author: loggedInUser.name,
+            authorTitle: mockUserProfile.title, // Usa o título do perfil logado
+            avatarClass: mockUserProfile.avatarClass, // Usa a classe do perfil logado
             content: postContent,
             skulls: 0,
             date: new Date().toLocaleString('pt-BR'),
@@ -355,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         mockPosts.push(newPost);
-        renderPosts(); // Re-renderiza o feed com a nova postagem
-        postContentTextarea.value = ''; // Limpa o campo
+        renderPosts();
+        postContentTextarea.value = '';
     });
 });

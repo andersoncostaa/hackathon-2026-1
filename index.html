@@ -1,115 +1,159 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villain LinkedIn</title>
+    <title>LinkedEvil | A Rede Profissional dos Vilões</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Villain LinkedIn</h1>
-        <nav>
-            <ul>
-                <li><a href="#" id="nav-feed">Feed</a></li>
-                <li><a href="#" id="nav-profile">Perfil</a></li>
-                <li><a href="#" id="nav-jobs">Vagas</a></li>
-                <li><a href="#" id="nav-auth">Login/Registro</a></li>
-                <li><a href="#" id="nav-logout" style="display:none;">Sair</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="auth-section">
-            <h2>Bem-vindo, Vilão!</h2>
-            <p>Faça login ou registre-se para começar a espalhar o caos.</p>
-
-            <div class="auth-forms">
-                <div class="form-container">
-                    <h3>Login</h3>
-                    <form id="login-form">
-                        <label for="login-villain-name">Nome de Vilão:</label>
-                        <input type="text" id="login-villain-name" required>
-
-                        <label for="login-password">Senha:</label>
-                        <input type="password" id="login-password" required>
-
-                        <button type="submit">Entrar</button>
-                    </form>
-                </div>
-
-                <div class="form-container">
-                    <h3>Registro</h3>
-                    <form id="register-form">
-                        <label for="register-villain-name">Nome de Vilão:</label>
-                        <input type="text" id="register-villain-name" required>
-
-                        <label for="register-password">Senha:</label>
-                        <input type="password" id="register-password" required>
-
-                        <label for="register-confirm-password">Confirmar Senha:</label>
-                        <input type="password" id="register-confirm-password" required>
-
-                        <button type="submit">Registrar</button>
-                    </form>
-                </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="logo">in<span class="logo-evil">Evil</span></span>
+            <div class="search-placeholder">🔍 Buscar heróis para eliminar...</div>
+            <!-- Adicionei os links de navegação aqui para corresponder ao script.js -->
+            <div class="nav-links">
+                <a href="#" id="nav-feed" class="nav-item">Feed</a>
+                <a href="#" id="nav-profile" class="nav-item">Perfil</a>
+                <a href="#" id="nav-jobs" class="nav-item">Vagas</a>
+                <a href="#" id="nav-auth" class="nav-item">Login/Registro</a>
+                <a href="#" id="nav-logout" class="nav-item" style="display:none;">Sair</a>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <section id="feed-section" style="display:none;">
-            <h2>Feed de Maldades</h2>
-            <!-- Formulário para nova postagem -->
-            <div class="new-post">
-                <textarea id="post-content" placeholder="O que você está tramando hoje?"></textarea>
-                <button id="submit-post">Postar Maldade</button>
-            </div>
-            <!-- Lista de postagens -->
-            <div id="posts-list">
-                <!-- Postagens serão carregadas aqui -->
-            </div>
-        </section>
+    <div class="main-layout">
 
-        <section id="profile-section" style="display:none;">
-            <h2>Meu Covil (Perfil)</h2>
-            <div class="profile-card">
-                <div class="profile-header">
-                    <img id="profile-pic" src="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao" alt="Foto de Perfil do Vilão">
-                    <h3 id="profile-villain-name">Nome do Vilão</h3>
+        <aside class="sidebar" id="sidebar-profile-section">
+            <!-- Conteúdo do perfil do Thanos (será dinâmico) -->
+            <div class="card profile-card">
+                <div class="cover-banner"></div>
+                <div class="avatar-container">
+                    <div class="avatar avatar-large" id="sidebar-profile-avatar">T</div>
                 </div>
-                <div class="profile-details">
-                    <h4>Editar Perfil</h4>
-                    <form id="edit-profile-form">
-                        <label for="edit-villain-name">Nome de Vilão:</label>
-                        <input type="text" id="edit-villain-name" value="Nome do Vilão" required>
-
-                        <label for="edit-profile-pic-url">URL da Foto de Perfil:</label>
-                        <input type="text" id="edit-profile-pic-url" value="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao">
-
-                        <label for="edit-abilities">Habilidades (separadas por vírgula):</label>
-                        <textarea id="edit-abilities" rows="3">Conquista Mundial, Riso Maligno, Magia Negra</textarea>
-
-                        <button type="submit">Salvar Alterações</button>
-                    </form>
-                    <h4>Minhas Habilidades:</h4>
-                    <ul id="profile-abilities-list">
-                        <!-- Habilidades serão carregadas aqui -->
-                    </ul>
+                <div class="profile-info">
+                    <h2 id="sidebar-profile-name">Thanos de Titã</h2>
+                    <p id="sidebar-profile-title">CEO @ Universo | Especialista em M&A de Joias do Infinito</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-row">
+                        <span>Quem viu o teu perfil</span>
+                        <span class="stat-number">14.000.065</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Impressões da publicação</span>
+                        <span class="stat-number">50%</span>
+                    </div>
+                </div>
+                <div class="profile-skills">
+                    <h4>Competências</h4>
+                    <div id="sidebar-profile-abilities">
+                        <span class="badge">Gestão de Crise (Snap)</span>
+                        <span class="badge">Alocação de Recursos</span>
+                        <span class="badge">Liderança Opressiva</span>
+                    </div>
                 </div>
             </div>
-        </section>
+        </aside>
 
-        <section id="jobs-section" style="display:none;">
-            <h2>Vagas para Vilões</h2>
-            <div id="jobs-list">
-                <!-- Vagas serão carregadas aqui -->
-            </div>
-        </section>
-    </main>
+        <main class="feed-container">
+            <!-- Seção de Autenticação -->
+            <section id="auth-section" class="card">
+                <h2>Bem-vindo, Vilão!</h2>
+                <p>Faça login ou registre-se para começar a espalhar o caos.</p>
 
-    <footer>
-        <p>&copy; 2024 Villain LinkedIn. Todos os direitos reservados aos mais cruéis.</p>
-    </footer>
+                <div class="auth-forms">
+                    <div class="form-container">
+                        <h3>Login</h3>
+                        <form id="login-form">
+                            <label for="login-villain-name">Nome de Vilão:</label>
+                            <input type="text" id="login-villain-name" required>
+
+                            <label for="login-password">Senha:</label>
+                            <input type="password" id="login-password" required>
+
+                            <button type="submit">Entrar</button>
+                        </form>
+                    </div>
+
+                    <div class="form-container">
+                        <h3>Registro</h3>
+                        <form id="register-form">
+                            <label for="register-villain-name">Nome de Vilão:</label>
+                            <input type="text" id="register-villain-name" required>
+
+                            <label for="register-password">Senha:</label>
+                            <input type="password" id="register-password" required>
+
+                            <label for="register-confirm-password">Confirmar Senha:</label>
+                            <input type="password" id="register-confirm-password" required>
+
+                            <button type="submit">Registrar</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção do Feed -->
+            <section id="feed-section" style="display:none;">
+                <div class="card caixa-postagem">
+                    <div class="post-header">
+                        <div class="avatar avatar-thanos" id="current-user-avatar">T</div>
+                        <div class="post-info">
+                            <h3 id="current-user-name">Thanos de Titã</h3>
+                            <p>A publicar como Utilizador Autenticado</p>
+                        </div>
+                    </div>
+                    <textarea id="post-content" rows="3" placeholder="Partilha o teu próximo plano de dominação mundial..."></textarea>
+                    <button id="submit-post">Publicar no Feed</button>
+                </div>
+
+                <div id="posts-list">
+                    <!-- Postagens serão carregadas aqui -->
+                </div>
+            </section>
+
+            <!-- Seção de Perfil (Edição) -->
+            <section id="profile-section" class="card" style="display:none;">
+                <h2>Meu Covil (Perfil)</h2>
+                <div class="profile-card-edit">
+                    <div class="profile-header">
+                        <img id="profile-pic" src="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao" alt="Foto de Perfil do Vilão">
+                        <h3 id="profile-villain-name-edit">Nome do Vilão</h3>
+                    </div>
+                    <div class="profile-details">
+                        <h4>Editar Perfil</h4>
+                        <form id="edit-profile-form">
+                            <label for="edit-villain-name">Nome de Vilão:</label>
+                            <input type="text" id="edit-villain-name" value="Nome do Vilão" required>
+
+                            <label for="edit-profile-pic-url">URL da Foto de Perfil:</label>
+                            <input type="text" id="edit-profile-pic-url" value="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao">
+
+                            <label for="edit-abilities">Habilidades (separadas por vírgula):</label>
+                            <textarea id="edit-abilities" rows="3">Conquista Mundial, Riso Maligno, Magia Negra</textarea>
+
+                            <button type="submit">Salvar Alterações</button>
+                        </form>
+                        <h4>Minhas Habilidades:</h4>
+                        <ul id="profile-abilities-list">
+                            <!-- Habilidades serão carregadas aqui -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Vagas -->
+            <section id="jobs-section" class="card" style="display:none;">
+                <h2>Vagas para Vilões</h2>
+                <div id="jobs-list">
+                    <!-- Vagas serão carregadas aqui -->
+                </div>
+            </section>
+        </main>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
