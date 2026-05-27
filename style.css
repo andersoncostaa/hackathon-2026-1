@@ -39,7 +39,7 @@ body {
 }
 
 .navbar .logo-evil {
-    color: #ff4444; /* Um toque de vermelho para o "Evil" */
+    color: #910dec; /* Um toque de vermelho para o "Evil" */
 }
 
 .search-placeholder {
@@ -358,6 +358,106 @@ button:hover {
     background-color: #821fd1;
 }
 
+/* Estilos para a seção de Perfil (Visualização) */
+.profile-view-card {
+    position: relative;
+    padding-bottom: 20px; /* Espaço para o botão de editar */
+}
+
+.cover-banner-profile {
+    background: linear-gradient(45deg, #4a1d7a, #110022);
+    height: 100px; /* Altura maior para o banner do perfil principal */
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.profile-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    padding: 0 20px;
+    margin-top: -60px; /* Move o avatar para cima do banner */
+}
+
+.profile-avatar-main-container {
+    margin-bottom: 15px;
+}
+
+#profile-display-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #18181c; /* Borda para o avatar */
+    background-color: #6b11b5; /* Cor de fundo para avatares de imagem */
+    display: block; /* Garante que a imagem ocupe seu próprio espaço */
+}
+
+.profile-main-info {
+    text-align: left;
+    width: 100%;
+}
+
+#profile-display-name {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+#profile-display-title {
+    font-size: 16px;
+    color: #cb9bf2;
+    margin-bottom: 10px;
+}
+
+#profile-display-bio {
+    font-size: 14px;
+    color: #d1d1d6;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.edit-button {
+    background-color: #cb9bf2;
+    color: #1d0033;
+    border: 1px solid #cb9bf2;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    width: auto; /* Ajusta a largura para o conteúdo */
+    margin-top: 15px;
+}
+
+.edit-button:hover {
+    background-color: #9f82bf;
+    color: #1d0033;
+}
+
+.cancel-button {
+    background-color: transparent;
+    color: #cb9bf2;
+    border: 1px solid #cb9bf2;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    width: auto;
+    margin-top: 10px;
+    margin-left: 10px; /* Espaçamento do botão Salvar */
+}
+
+.cancel-button:hover {
+    background-color: #4a1d7a;
+    color: white;
+}
+
+
 /* Estilos para a seção de Perfil (Edição) */
 #profile-section h2 {
     color: #cb9bf2;
@@ -366,43 +466,15 @@ button:hover {
     margin-bottom: 20px;
 }
 
-.profile-card-edit {
-    background-color: #18181c;
+.profile-details-edit {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     border: 1px solid #2b2b30;
+    border-radius: 10px;
+    background-color: #18181c;
+    margin-top: 20px; /* Espaçamento entre a visualização e a edição */
 }
 
-.profile-card-edit .profile-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.profile-card-edit #profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #6b11b5;
-    margin-bottom: 10px;
-}
-
-.profile-card-edit #profile-villain-name-edit {
-    color: #cb9bf2;
-    font-size: 2rem;
-    margin: 0;
-}
-
-.profile-card-edit .profile-details {
-    width: 100%;
-    max-width: 500px;
-}
-
-.profile-card-edit .profile-details h4 {
+.profile-details-edit h4 {
     color: #cb9bf2;
     border-bottom: 1px solid #4a1d7a;
     padding-bottom: 5px;
@@ -447,22 +519,20 @@ button:hover {
     background-color: #821fd1;
 }
 
-#profile-abilities-list {
-    list-style: none;
-    padding: 0;
+#profile-abilities-display {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
 }
 
-#profile-abilities-list li {
+#profile-abilities-display .badge {
     background-color: #251b33;
     color: #cb9bf2;
+    border: 1px solid #4a1d7a;
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 0.9rem;
-    border: 1px solid #4a1d7a;
 }
 
 /* Estilos para a seção de Vagas */

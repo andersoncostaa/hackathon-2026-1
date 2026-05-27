@@ -24,21 +24,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const postsList = document.getElementById('posts-list');
     const currentUserAvatar = document.getElementById('current-user-avatar');
     const currentUserName = document.getElementById('current-user-name');
+    const currentUserTitle = document.getElementById('current-user-title');
+
+    // Elementos do Perfil (Visualização)
+    const profileDisplayAvatar = document.getElementById('profile-display-avatar'); // Agora é um div
+    const profileDisplayName = document.getElementById('profile-display-name');
+    const profileDisplayTitle = document.getElementById('profile-display-title');
+    const profileDisplayBio = document.getElementById('profile-display-bio');
+    const profileAbilitiesDisplay = document.getElementById('profile-abilities-display');
+    const editProfileButton = document.getElementById('edit-profile-button');
 
     // Elementos do Perfil (Edição)
-    const profilePic = document.getElementById('profile-pic');
-    const profileVillainNameEdit = document.getElementById('profile-villain-name-edit');
+    const editProfileSection = document.getElementById('edit-profile-section');
     const editVillainName = document.getElementById('edit-villain-name');
+    const editVillainTitle = document.getElementById('edit-villain-title');
+    const editVillainBio = document.getElementById('edit-villain-bio');
     const editProfilePicUrl = document.getElementById('edit-profile-pic-url');
     const editAbilities = document.getElementById('edit-abilities');
     const editProfileForm = document.getElementById('edit-profile-form');
-    const profileAbilitiesList = document.getElementById('profile-abilities-list');
+    const cancelEditProfileButton = document.getElementById('cancel-edit-profile');
 
     // Elementos da Sidebar (Perfil do Usuário Logado)
     const sidebarProfileSection = document.getElementById('sidebar-profile-section');
     const sidebarProfileAvatar = document.getElementById('sidebar-profile-avatar');
     const sidebarProfileName = document.getElementById('sidebar-profile-name');
-    const sidebarProfileTitle = document.getElementById('sidebar-profile-title'); // Novo elemento
+    const sidebarProfileTitle = document.getElementById('sidebar-profile-title');
     const sidebarProfileAbilities = document.getElementById('sidebar-profile-abilities');
 
     // Elementos de Vagas
@@ -131,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let mockUserProfile = {
         name: 'Vilão Padrão',
         title: 'Aprendiz de Malfeitor',
-        profilePic: 'https://via.placeholder.com/150/ff0000/ffffff?text=VP',
+        bio: 'Um vilão em ascensão, buscando novas oportunidades para espalhar o caos e a destruição.',
+        profilePic: '', // Vazio para testar as iniciais
         avatarInitial: 'VP',
         avatarClass: 'avatar-thanos', // Classe padrão para o avatar
         abilities: ['Conquista Mundial', 'Riso Maligno', 'Magia Negra']
@@ -174,6 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         sectionToShow.style.display = 'block';
+
+        // Lógica específica para a seção de perfil
+        if (sectionToShow === profileSection) {
+            // Sempre começa mostrando a visualização do perfil e escondendo a edição
+            editProfileSection.style.display = 'none';
+        }
     }
 
     // Função para atualizar a visibilidade dos itens de navegação
@@ -257,39 +274,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Funções de Perfil ---
     function loadProfile() {
-        profilePic.src = mockUserProfile.profilePic;
-        profileVillainNameEdit.textContent = mockUserProfile.name;
+        // Preenche a visualização do perfil
+        profileDisplayName.textContent = mockUserProfile.name;
+        profileDisplayTitle.textContent = mockUserProfile.title;
+        profileDisplayBio.textContent = mockUserProfile.bio;
+        renderAbilitiesDisplay(); // Renderiza as habilidades na visualização
+
+        // Lógica para o avatar (imagem ou iniciais)
+        profileDisplayAvatar.innerHTML = ''; // Limpa o conteúdo anterior
+        // Garante que o div tenha as classes base de avatar
+        profileDisplayAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`;
+
+        if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
+            const img = document.createElement('img');
+            img.src = mockUserProfile.profilePic;
+            img.alt = `Foto de perfil de ${mockUserProfile.name}`;
+            // Estiliza a imagem para preencher o div circular
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.borderRadius = '50%';
+            img.style.objectFit = 'cover';
+            profileDisplayAvatar.appendChild(img);
+            profileDisplayAvatar.textContent = ''; // Garante que não haja texto de iniciais
+        } else {
+            profileDisplayAvatar.textContent = mockUserProfile.avatarInitial || mockUserProfile.name.charAt(0).toUpperCase();
+        }
+
+        // Preenche o formulário de edição
         editVillainName.value = mockUserProfile.name;
+        editVillainTitle.value = mockUserProfile.title;
+        editVillainBio.value = mockUserProfile.bio;
         editProfilePicUrl.value = mockUserProfile.profilePic;
         editAbilities.value = mockUserProfile.abilities.join(', ');
-        renderAbilities();
     }
 
-    function renderAbilities() {
-        profileAbilitiesList.innerHTML = '';
+    function renderAbilitiesDisplay() {
+        profileAbilitiesDisplay.innerHTML = '';
         mockUserProfile.abilities.forEach(ability => {
-            const li = document.createElement('li');
-            li.textContent = ability.trim();
-            profileAbilitiesList.appendChild(li);
+            const span = document.createElement('span');
+            span.classList.add('badge');
+            span.textContent = ability.trim();
+            profileAbilitiesDisplay.appendChild(span);
         });
     }
 
     editProfileForm.addEventListener('submit', (e) => {
         e.preventDefault();
         mockUserProfile.name = editVillainName.value;
+        mockUserProfile.title = editVillainTitle.value;
+        mockUserProfile.bio = editVillainBio.value;
         mockUserProfile.profilePic = editProfilePicUrl.value;
         mockUserProfile.abilities = editAbilities.value.split(',').map(s => s.trim()).filter(s => s !== '');
+        mockUserProfile.avatarInitial = mockUserProfile.name.charAt(0).toUpperCase(); // Atualiza iniciais
 
-        // Atualiza o nome do usuário logado se ele mudou o próprio perfil
-        if (loggedInUser && loggedInUser.name === profileVillainNameEdit.textContent) {
+        // Atualiza o nome e título do usuário logado se ele mudou o próprio perfil
+        if (loggedInUser && loggedInUser.name === profileDisplayName.textContent) {
             loggedInUser.name = mockUserProfile.name;
+            loggedInUser.title = mockUserProfile.title;
         }
 
         alert('Perfil atualizado com sucesso!');
         loadProfile(); // Recarrega o perfil para exibir as mudanças
         updateSidebarProfile(); // Atualiza a sidebar também
-        updatePostCreatorInfo(); // Atualiza o nome na caixa de postagem
+        updatePostCreatorInfo(); // Atualiza o nome e título na caixa de postagem
+
+        // Esconde o formulário de edição e mostra a visualização
+        editProfileSection.style.display = 'none';
     });
+
+    editProfileButton.addEventListener('click', () => {
+        editProfileSection.style.display = 'block'; // Mostra o formulário de edição
+        loadProfile(); // Carrega os dados mais recentes no formulário
+    });
+
+    cancelEditProfileButton.addEventListener('click', () => {
+        editProfileSection.style.display = 'none'; // Esconde o formulário de edição
+    });
+
 
     // --- Funções de Vagas ---
     function createJobElement(job) {
@@ -324,9 +385,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateSidebarProfile() {
         if (loggedInUser) {
             sidebarProfileName.textContent = mockUserProfile.name;
-            sidebarProfileTitle.textContent = mockUserProfile.title; // Usar o título do mockUserProfile
-            sidebarProfileAvatar.textContent = mockUserProfile.avatarInitial || mockUserProfile.name.charAt(0).toUpperCase();
-            sidebarProfileAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`; // Atualiza a classe do avatar
+            sidebarProfileTitle.textContent = mockUserProfile.title;
+
+            sidebarProfileAvatar.innerHTML = ''; // Limpa o conteúdo anterior
+            sidebarProfileAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`;
+
+            if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
+                const img = document.createElement('img');
+                img.src = mockUserProfile.profilePic;
+                img.alt = `Foto de perfil de ${mockUserProfile.name}`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.borderRadius = '50%';
+                img.style.objectFit = 'cover';
+                sidebarProfileAvatar.appendChild(img);
+            } else {
+                sidebarProfileAvatar.textContent = mockUserProfile.avatarInitial || mockUserProfile.name.charAt(0).toUpperCase();
+            }
 
             // Renderiza as habilidades na sidebar
             sidebarProfileAbilities.innerHTML = '';
@@ -347,10 +422,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePostCreatorInfo() {
         if (loggedInUser) {
             currentUserName.textContent = loggedInUser.name;
-            currentUserAvatar.textContent = loggedInUser.name.charAt(0).toUpperCase();
-            currentUserAvatar.className = `avatar ${mockUserProfile.avatarClass}`; // Usa a classe do perfil logado
+            currentUserTitle.textContent = mockUserProfile.title; // Atualiza o título
+
+            currentUserAvatar.innerHTML = ''; // Limpa o conteúdo anterior
+            currentUserAvatar.className = `avatar ${mockUserProfile.avatarClass}`;
+
+            if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
+                const img = document.createElement('img');
+                img.src = mockUserProfile.profilePic;
+                img.alt = `Foto de perfil de ${mockUserProfile.name}`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.borderRadius = '50%';
+                img.style.objectFit = 'cover';
+                currentUserAvatar.appendChild(img);
+            } else {
+                currentUserAvatar.textContent = loggedInUser.name.charAt(0).toUpperCase();
+            }
         } else {
             currentUserName.textContent = 'Usuário Desconhecido';
+            currentUserTitle.textContent = 'A publicar como Utilizador Autenticado';
             currentUserAvatar.textContent = '?';
             currentUserAvatar.className = 'avatar';
         }
@@ -379,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (loggedInUser) {
             showSection(profileSection);
-            loadProfile();
+            loadProfile(); // Carrega os dados do perfil ao ir para a seção
         } else {
             alert('Você precisa estar logado para acessar seu Perfil!');
             showSection(authSection);
@@ -420,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('login-password').value;
 
         if (villainName && password) {
-            loggedInUser = { name: villainName, id: Date.now() };
+            loggedInUser = { name: villainName, id: Date.now(), title: mockUserProfile.title }; // Adiciona título ao loggedInUser
             mockUserProfile.name = villainName;
             mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
             mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
@@ -446,8 +537,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (villainName && password) {
-            loggedInUser = { name: villainName, id: Date.now() };
+            loggedInUser = { name: villainName, id: Date.now(), title: 'Novo Vilão Registrado' }; // Adiciona título padrão
             mockUserProfile.name = villainName;
+            mockUserProfile.title = 'Novo Vilão Registrado'; // Define um título padrão para o perfil
+            mockUserProfile.bio = 'Este é um novo vilão, pronto para causar problemas!'; // Define uma bio padrão
             mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
             mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
             alert(`Registro do vilão ${villainName} simulado com sucesso!`);

@@ -102,7 +102,7 @@
                         <div class="avatar avatar-thanos" id="current-user-avatar">T</div>
                         <div class="post-info">
                             <h3 id="current-user-name">Thanos de Titã</h3>
-                            <p>A publicar como Utilizador Autenticado</p>
+                            <p id="current-user-title">A publicar como Utilizador Autenticado</p>
                         </div>
                     </div>
                     <textarea id="post-content" rows="3" placeholder="Partilha o teu próximo plano de dominação mundial..."></textarea>
@@ -114,32 +114,48 @@
                 </div>
             </section>
 
-            <!-- Seção de Perfil (Edição) -->
-            <section id="profile-section" class="card" style="display:none;">
-                <h2>Meu Covil (Perfil)</h2>
-                <div class="profile-card-edit">
-                    <div class="profile-header">
-                        <img id="profile-pic" src="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao" alt="Foto de Perfil do Vilão">
-                        <h3 id="profile-villain-name-edit">Nome do Vilão</h3>
+            <!-- Seção de Perfil (Visualização e Edição) -->
+            <section id="profile-section" style="display:none;">
+                <div class="card profile-view-card">
+                    <div class="cover-banner-profile"></div>
+                    <div class="profile-main-content">
+                        <div class="profile-avatar-main-container">
+                            <!-- Alterado de <img> para <div> para permitir iniciais ou imagem -->
+                            <div id="profile-display-avatar" class="avatar avatar-large avatar-thanos">VP</div>
+                        </div>
+                        <div class="profile-main-info">
+                            <h2 id="profile-display-name">Nome do Vilão</h2>
+                            <p id="profile-display-title">Cargo/Título do Vilão</p>
+                            <p id="profile-display-bio">Bio do Vilão</p>
+                            <button id="edit-profile-button" class="edit-button">Editar Perfil</button>
+                        </div>
                     </div>
-                    <div class="profile-details">
-                        <h4>Editar Perfil</h4>
-                        <form id="edit-profile-form">
-                            <label for="edit-villain-name">Nome de Vilão:</label>
-                            <input type="text" id="edit-villain-name" value="Nome do Vilão" required>
+                </div>
 
-                            <label for="edit-profile-pic-url">URL da Foto de Perfil:</label>
-                            <input type="text" id="edit-profile-pic-url" value="https://via.placeholder.com/150/ff0000/ffffff?text=Vilao">
+                <div class="card profile-details-edit" id="edit-profile-section" style="display:none;">
+                    <h4>Editar Perfil</h4>
+                    <form id="edit-profile-form">
+                        <label for="edit-villain-name">Nome de Vilão:</label>
+                        <input type="text" id="edit-villain-name" required>
 
-                            <label for="edit-abilities">Habilidades (separadas por vírgula):</label>
-                            <textarea id="edit-abilities" rows="3">Conquista Mundial, Riso Maligno, Magia Negra</textarea>
+                        <label for="edit-villain-title">Cargo/Título:</label>
+                        <input type="text" id="edit-villain-title">
 
-                            <button type="submit">Salvar Alterações</button>
-                        </form>
-                        <h4>Minhas Habilidades:</h4>
-                        <ul id="profile-abilities-list">
-                            <!-- Habilidades serão carregadas aqui -->
-                        </ul>
+                        <label for="edit-villain-bio">Bio:</label>
+                        <textarea id="edit-villain-bio" rows="3"></textarea>
+
+                        <label for="edit-profile-pic-url">URL da Foto de Perfil:</label>
+                        <input type="text" id="edit-profile-pic-url">
+
+                        <label for="edit-abilities">Habilidades (separadas por vírgula):</label>
+                        <textarea id="edit-abilities" rows="3"></textarea>
+
+                        <button type="submit">Salvar Alterações</button>
+                        <button type="button" id="cancel-edit-profile" class="cancel-button">Cancelar</button>
+                    </form>
+                    <h4>Minhas Habilidades:</h4>
+                    <div id="profile-abilities-display">
+                        <!-- Habilidades serão carregadas aqui -->
                     </div>
                 </div>
             </section>
