@@ -81,6 +81,50 @@ document.addEventListener('DOMContentLoaded', () => {
             date: '2024-07-19 09:00',
             timestamp: new Date('2024-07-19T09:00:00').getTime(),
             skulledBy: []
+        },
+        {
+            id: 4,
+            author: 'Darth Vader',
+            authorTitle: 'Sith Lord | Especialista em Gestão de Crises e Asfixia Remota',
+            avatarClass: 'avatar-vader',
+            content: 'Procurando um novo empreiteiro de infraestrutura para a Estrela da Morte. O último teve um... imprevisto fatal no trabalho. Requisito obrigatório: não projetar dutos de exaustão expostos. <br><br><span class="hashtags">#LadoNegro #VagasGalacticas #GestaoDeProjetos</span>',
+            skulls: 42,
+            date: '2024-07-21 14:00',
+            timestamp: new Date('2024-07-21T14:00:00').getTime(),
+            skulledBy: ['Thanos de Titã', 'Ultron AI']
+        },
+        {
+            id: 5,
+            author: 'Lord Voldemort',
+            authorTitle: 'Empreendedor Imortal | CEO @ Comensais da Morte',
+            avatarClass: 'avatar-voldemort',
+            content: 'Alguém recomenda um bom serviço de cloud computing? Dividi meu projeto principal em 7 partes físicas (horcruxes) e acabei descobrindo que o backup de hardware local é muito vulnerável a adolescentes com varinhas. <br><br><span class="hashtags">#DarkArts #HorcruxNaNuvem #InovacaoMaligna</span>',
+            skulls: 13,
+            date: '2024-07-22 23:59',
+            timestamp: new Date('2024-07-22T23:59:00').getTime(),
+            skulledBy: ['Loki Laufeyson']
+        },
+        {
+            id: 6,
+            author: 'Erik Lehnsherr (Magneto)',
+            authorTitle: 'Ativista Mutante | Mestre do Magnetismo',
+            avatarClass: 'avatar-magneto',
+            content: 'Cansado dessa cultura corporativa de "trabalho em equipe" com humanos. Estou fundando uma nova startup focada exclusivamente em talentos mutantes. Oferecemos plano de saúde, PLR agressiva e capacetes corporativos à prova de telepatia. Mande inbox. <br><br><span class="hashtags">#MutantPride #Startups #Recrutamento</span>',
+            skulls: 28,
+            date: '2024-07-23 08:15',
+            timestamp: new Date('2024-07-23T08:15:00').getTime(),
+            skulledBy: ['Ultron AI']
+        },
+        {
+            id: 7,
+            author: 'Coringa',
+            authorTitle: 'Agente do Caos | Consultor Independente',
+            avatarClass: 'avatar-joker',
+            content: 'Anotação para os gestores de RH: se você é bom em alguma coisa, nunca a faça de graça. A não ser que seja incendiar uma pilha gigante de dinheiro. Isso você pode fazer de graça porque a experiência de team building é fantástica! 🤡🔥 <br><br><span class="hashtags">#Empreendedorismo #CaosCorporativo #Sorria</span>',
+            skulls: 99,
+            date: '2024-07-24 02:30',
+            timestamp: new Date('2024-07-24T02:30:00').getTime(),
+            skulledBy: ['Loki Laufeyson', 'Darth Vader']
         }
     ];
 
