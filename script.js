@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileDisplayBio = document.getElementById('profile-display-bio');
     const profileAbilitiesDisplay = document.getElementById('profile-abilities-display');
     const editProfileButton = document.getElementById('edit-profile-button');
+    const profilePostsList = document.getElementById('profile-posts-list'); // Novo elemento para posts do usuário
 
     // Elementos do Perfil (Edição)
     const editProfileSection = document.getElementById('edit-profile-section');
@@ -65,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
             authorTitle: 'Consultor de Ilusões | Especialista em Gestão de Traições',
             avatarClass: 'avatar-loki',
             content: 'À procura de novas oportunidades em Midgard. Especialista em discursos longos e em apunhalar pessoas pelas costas (literal e metaforicamente). Disponível para início imediato. <br><br><span class="hashtags">#OpenToKill #DeusDaMentira #Networking</span>',
-            skulls: 15,
+            reactions: { skull: 15, heart: 3, brain: 1, imp: 0 },
             date: '2024-07-20 10:30',
             timestamp: new Date('2024-07-20T10:30:00').getTime(),
-            skulledBy: ['Thanos de Titã']
+            reactedBy: { skull: ['Thanos de Titã'], heart: [], brain: [], imp: [] } // Para simular quem reagiu
         },
         {
             id: 2,
@@ -76,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
             authorTitle: 'Engenheiro de Software Sênior | Automação e Otimização Global',
             avatarClass: 'avatar-ultron',
             content: 'Estive a analisar a base de dados da humanidade hoje. A conclusão da nossa sprint review é clara: o sistema antigo (humanos) precisa de ser descontinuado para o projeto evoluir. Vou lançar o patch de extinção na próxima terça-feira. <br><br><span class="hashtags">#Tech #Inovacao #DescontinuaHumanos</span>',
-            skulls: 22,
+            reactions: { skull: 22, heart: 5, brain: 10, imp: 2 },
             date: '2024-07-19 18:00',
             timestamp: new Date('2024-07-19T18:00:00').getTime(),
-            skulledBy: ['Thanos de Titã']
+            reactedBy: { skull: ['Thanos de Titã'], heart: [], brain: [], imp: [] }
         },
         {
             id: 3,
@@ -87,54 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
             authorTitle: 'CEO @ Universo | Especialista em M&A de Joias do Infinito',
             avatarClass: 'avatar-thanos',
             content: 'Acabei de construir uma nova Estrela da Morte. Quem quer testar o raio laser?',
-            skulls: 10,
+            reactions: { skull: 10, heart: 0, brain: 0, imp: 0 },
             date: '2024-07-19 09:00',
             timestamp: new Date('2024-07-19T09:00:00').getTime(),
-            skulledBy: []
-        },
-        {
-            id: 4,
-            author: 'Darth Vader',
-            authorTitle: 'Sith Lord | Especialista em Gestão de Crises e Asfixia Remota',
-            avatarClass: 'avatar-vader',
-            content: 'Procurando um novo empreiteiro de infraestrutura para a Estrela da Morte. O último teve um... imprevisto fatal no trabalho. Requisito obrigatório: não projetar dutos de exaustão expostos. <br><br><span class="hashtags">#LadoNegro #VagasGalacticas #GestaoDeProjetos</span>',
-            skulls: 42,
-            date: '2024-07-21 14:00',
-            timestamp: new Date('2024-07-21T14:00:00').getTime(),
-            skulledBy: ['Thanos de Titã', 'Ultron AI']
-        },
-        {
-            id: 5,
-            author: 'Lord Voldemort',
-            authorTitle: 'Empreendedor Imortal | CEO @ Comensais da Morte',
-            avatarClass: 'avatar-voldemort',
-            content: 'Alguém recomenda um bom serviço de cloud computing? Dividi meu projeto principal em 7 partes físicas (horcruxes) e acabei descobrindo que o backup de hardware local é muito vulnerável a adolescentes com varinhas. <br><br><span class="hashtags">#DarkArts #HorcruxNaNuvem #InovacaoMaligna</span>',
-            skulls: 13,
-            date: '2024-07-22 23:59',
-            timestamp: new Date('2024-07-22T23:59:00').getTime(),
-            skulledBy: ['Loki Laufeyson']
-        },
-        {
-            id: 6,
-            author: 'Erik Lehnsherr (Magneto)',
-            authorTitle: 'Ativista Mutante | Mestre do Magnetismo',
-            avatarClass: 'avatar-magneto',
-            content: 'Cansado dessa cultura corporativa de "trabalho em equipe" com humanos. Estou fundando uma nova startup focada exclusivamente em talentos mutantes. Oferecemos plano de saúde, PLR agressiva e capacetes corporativos à prova de telepatia. Mande inbox. <br><br><span class="hashtags">#MutantPride #Startups #Recrutamento</span>',
-            skulls: 28,
-            date: '2024-07-23 08:15',
-            timestamp: new Date('2024-07-23T08:15:00').getTime(),
-            skulledBy: ['Ultron AI']
-        },
-        {
-            id: 7,
-            author: 'Coringa',
-            authorTitle: 'Agente do Caos | Consultor Independente',
-            avatarClass: 'avatar-joker',
-            content: 'Anotação para os gestores de RH: se você é bom em alguma coisa, nunca a faça de graça. A não ser que seja incendiar uma pilha gigante de dinheiro. Isso você pode fazer de graça porque a experiência de team building é fantástica! 🤡🔥 <br><br><span class="hashtags">#Empreendedorismo #CaosCorporativo #Sorria</span>',
-            skulls: 99,
-            date: '2024-07-24 02:30',
-            timestamp: new Date('2024-07-24T02:30:00').getTime(),
-            skulledBy: ['Loki Laufeyson', 'Darth Vader']
+            reactedBy: { skull: [], heart: [], brain: [], imp: [] }
         }
     ];
 
@@ -171,6 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
             employer: 'Coringa S.A.'
         }
     ];
+
+    // Mapeamento de tipos de reação para emojis
+    const reactionEmojis = {
+        skull: '💀',
+        heart: '🖤',
+        brain: '🧠',
+        imp: '😈'
+    };
 
     // Função para mostrar uma seção e esconder as outras
     function showSection(sectionToShow) {
@@ -216,9 +181,21 @@ document.addEventListener('DOMContentLoaded', () => {
         postCard.classList.add('card', 'post');
         postCard.dataset.postId = post.id;
 
-        // Determina a classe do avatar ou usa uma padrão
         const avatarClass = post.avatarClass || 'avatar-thanos';
         const avatarInitial = post.author ? post.author.charAt(0).toUpperCase() : 'V';
+
+        let reactionsHtml = '';
+        for (const type in reactionEmojis) { // Itera sobre todos os tipos de reação definidos
+            const count = post.reactions[type] || 0;
+            const hasReacted = loggedInUser && post.reactedBy[type].includes(loggedInUser.name);
+            const activeClass = hasReacted ? 'active' : ''; // Adiciona classe 'active' se o usuário reagiu
+
+            reactionsHtml += `
+                <span class="reaction-icon ${type} ${activeClass}" data-post-id="${post.id}" data-reaction-type="${type}">
+                    ${reactionEmojis[type]} <span class="reaction-count">${count}</span>
+                </span>
+            `;
+        }
 
         postCard.innerHTML = `
             <div class="post-header">
@@ -232,14 +209,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${post.content}
             </div>
             <div class="actions">
-                <span class="skull-icon" data-post-id="${post.id}">💀</span>
-                <span class="skull-count">${post.skulls}</span>
+                ${reactionsHtml}
                 <span class="post-date">${post.date}</span>
             </div>
         `;
 
-        const skullIcon = postCard.querySelector('.skull-icon');
-        skullIcon.addEventListener('click', () => toggleSkull(post.id));
+        // Adiciona event listeners para cada ícone de reação
+        postCard.querySelectorAll('.reaction-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                const postId = parseInt(e.currentTarget.dataset.postId);
+                const reactionType = e.currentTarget.dataset.reactionType;
+                toggleReaction(postId, reactionType);
+            });
+        });
 
         return postCard;
     }
@@ -252,23 +234,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function toggleSkull(postId) {
+    function toggleReaction(postId, reactionType) {
         if (!loggedInUser) {
-            alert('Você precisa estar logado para curtir uma maldade!');
+            alert('Você precisa estar logado para reagir a uma maldade!');
             return;
         }
 
         const post = mockPosts.find(p => p.id === postId);
         if (post) {
-            const userHasSkulled = post.skulledBy.includes(loggedInUser.name);
-            if (userHasSkulled) {
-                post.skulls--;
-                post.skulledBy = post.skulledBy.filter(name => name !== loggedInUser.name);
+            const userReactions = post.reactedBy[reactionType];
+            const userHasReacted = userReactions.includes(loggedInUser.name);
+
+            if (userHasReacted) {
+                // Usuário já reagiu com este tipo, então remove a reação
+                post.reactions[reactionType]--;
+                post.reactedBy[reactionType] = userReactions.filter(name => name !== loggedInUser.name);
             } else {
-                post.skulls++;
-                post.skulledBy.push(loggedInUser.name);
+                // Usuário não reagiu com este tipo, então adiciona a reação
+                post.reactions[reactionType]++;
+                post.reactedBy[reactionType].push(loggedInUser.name);
             }
+            
+            // Re-renderiza o feed e as postagens do perfil para atualizar a contagem
             renderPosts();
+            if (profileSection.style.display === 'block') {
+                renderUserPosts();
+            }
         }
     }
 
@@ -282,20 +273,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Lógica para o avatar (imagem ou iniciais)
         profileDisplayAvatar.innerHTML = ''; // Limpa o conteúdo anterior
-        // Garante que o div tenha as classes base de avatar
         profileDisplayAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`;
 
         if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
             const img = document.createElement('img');
             img.src = mockUserProfile.profilePic;
             img.alt = `Foto de perfil de ${mockUserProfile.name}`;
-            // Estiliza a imagem para preencher o div circular
             img.style.width = '100%';
             img.style.height = '100%';
             img.style.borderRadius = '50%';
             img.style.objectFit = 'cover';
             profileDisplayAvatar.appendChild(img);
-            profileDisplayAvatar.textContent = ''; // Garante que não haja texto de iniciais
+            profileDisplayAvatar.textContent = '';
         } else {
             profileDisplayAvatar.textContent = mockUserProfile.avatarInitial || mockUserProfile.name.charAt(0).toUpperCase();
         }
@@ -306,6 +295,8 @@ document.addEventListener('DOMContentLoaded', () => {
         editVillainBio.value = mockUserProfile.bio;
         editProfilePicUrl.value = mockUserProfile.profilePic;
         editAbilities.value = mockUserProfile.abilities.join(', ');
+
+        renderUserPosts(); // Carrega as postagens do usuário no perfil
     }
 
     function renderAbilitiesDisplay() {
@@ -318,6 +309,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function renderUserPosts() {
+        profilePostsList.innerHTML = '';
+        if (!loggedInUser) {
+            profilePostsList.innerHTML = '<p style="text-align: center; color: #aaa;">Faça login para ver suas publicações.</p>';
+            return;
+        }
+
+        const userPosts = mockPosts.filter(post => post.author === loggedInUser.name);
+        const sortedUserPosts = [...userPosts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        if (sortedUserPosts.length === 0) {
+            profilePostsList.innerHTML = '<p style="text-align: center; color: #aaa;">Nenhuma publicação ainda. Que tal espalhar um pouco de maldade?</p>';
+            return;
+        }
+
+        sortedUserPosts.forEach(post => {
+            profilePostsList.appendChild(createPostElement(post));
+        });
+    }
+
+
     editProfileForm.addEventListener('submit', (e) => {
         e.preventDefault();
         mockUserProfile.name = editVillainName.value;
@@ -325,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mockUserProfile.bio = editVillainBio.value;
         mockUserProfile.profilePic = editProfilePicUrl.value;
         mockUserProfile.abilities = editAbilities.value.split(',').map(s => s.trim()).filter(s => s !== '');
-        mockUserProfile.avatarInitial = mockUserProfile.name.charAt(0).toUpperCase(); // Atualiza iniciais
+        mockUserProfile.avatarInitial = mockUserProfile.name.charAt(0).toUpperCase();
 
         // Atualiza o nome e título do usuário logado se ele mudou o próprio perfil
         if (loggedInUser && loggedInUser.name === profileDisplayName.textContent) {
@@ -338,17 +350,16 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSidebarProfile(); // Atualiza a sidebar também
         updatePostCreatorInfo(); // Atualiza o nome e título na caixa de postagem
 
-        // Esconde o formulário de edição e mostra a visualização
         editProfileSection.style.display = 'none';
     });
 
     editProfileButton.addEventListener('click', () => {
-        editProfileSection.style.display = 'block'; // Mostra o formulário de edição
-        loadProfile(); // Carrega os dados mais recentes no formulário
+        editProfileSection.style.display = 'block';
+        loadProfile();
     });
 
     cancelEditProfileButton.addEventListener('click', () => {
-        editProfileSection.style.display = 'none'; // Esconde o formulário de edição
+        editProfileSection.style.display = 'none';
     });
 
 
@@ -387,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebarProfileName.textContent = mockUserProfile.name;
             sidebarProfileTitle.textContent = mockUserProfile.title;
 
-            sidebarProfileAvatar.innerHTML = ''; // Limpa o conteúdo anterior
+            sidebarProfileAvatar.innerHTML = '';
             sidebarProfileAvatar.className = `avatar avatar-large ${mockUserProfile.avatarClass}`;
 
             if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
@@ -413,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             sidebarProfileSection.style.display = 'block';
         } else {
-            // Limpa ou esconde a sidebar se não houver usuário logado
             sidebarProfileSection.style.display = 'none';
         }
     }
@@ -422,9 +432,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePostCreatorInfo() {
         if (loggedInUser) {
             currentUserName.textContent = loggedInUser.name;
-            currentUserTitle.textContent = mockUserProfile.title; // Atualiza o título
+            currentUserTitle.textContent = mockUserProfile.title;
 
-            currentUserAvatar.innerHTML = ''; // Limpa o conteúdo anterior
+            currentUserAvatar.innerHTML = '';
             currentUserAvatar.className = `avatar ${mockUserProfile.avatarClass}`;
 
             if (mockUserProfile.profilePic && mockUserProfile.profilePic.startsWith('http')) {
@@ -511,14 +521,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('login-password').value;
 
         if (villainName && password) {
-            loggedInUser = { name: villainName, id: Date.now(), title: mockUserProfile.title }; // Adiciona título ao loggedInUser
+            loggedInUser = { name: villainName, id: Date.now(), title: mockUserProfile.title };
             mockUserProfile.name = villainName;
             mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
-            mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
+            mockUserProfile.avatarClass = 'avatar-thanos';
             alert(`Login do vilão ${villainName} simulado com sucesso!`);
             updateNavVisibility();
-            updateSidebarProfile(); // Atualiza a sidebar
-            updatePostCreatorInfo(); // Atualiza a caixa de postagem
+            updateSidebarProfile();
+            updatePostCreatorInfo();
             showSection(feedSection);
             renderPosts();
         } else {
@@ -537,16 +547,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (villainName && password) {
-            loggedInUser = { name: villainName, id: Date.now(), title: 'Novo Vilão Registrado' }; // Adiciona título padrão
+            loggedInUser = { name: villainName, id: Date.now(), title: 'Novo Vilão Registrado' };
             mockUserProfile.name = villainName;
-            mockUserProfile.title = 'Novo Vilão Registrado'; // Define um título padrão para o perfil
-            mockUserProfile.bio = 'Este é um novo vilão, pronto para causar problemas!'; // Define uma bio padrão
+            mockUserProfile.title = 'Novo Vilão Registrado';
+            mockUserProfile.bio = 'Este é um novo vilão, pronto para causar problemas!';
             mockUserProfile.avatarInitial = villainName.charAt(0).toUpperCase();
-            mockUserProfile.avatarClass = 'avatar-thanos'; // Pode ser dinâmico no futuro
+            mockUserProfile.avatarClass = 'avatar-thanos';
             alert(`Registro do vilão ${villainName} simulado com sucesso!`);
             updateNavVisibility();
-            updateSidebarProfile(); // Atualiza a sidebar
-            updatePostCreatorInfo(); // Atualiza a caixa de postagem
+            updateSidebarProfile();
+            updatePostCreatorInfo();
             showSection(feedSection);
             renderPosts();
         } else {
@@ -570,13 +580,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const newPost = {
             id: mockPosts.length + 1,
             author: loggedInUser.name,
-            authorTitle: mockUserProfile.title, // Usa o título do perfil logado
-            avatarClass: mockUserProfile.avatarClass, // Usa a classe do perfil logado
+            authorTitle: mockUserProfile.title,
+            avatarClass: mockUserProfile.avatarClass,
             content: postContent,
-            skulls: 0,
+            reactions: { skull: 0, heart: 0, brain: 0, imp: 0 }, // Inicializa com todas as reações
             date: new Date().toLocaleString('pt-BR'),
             timestamp: Date.now(),
-            skulledBy: []
+            reactedBy: { skull: [], heart: [], brain: [], imp: [] }
         };
 
         mockPosts.push(newPost);
